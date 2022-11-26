@@ -50,7 +50,7 @@ sudo chmod +x run_ransomware.sh && sudo ./run_ransomware.sh
  cd /root/ransomware && python3 ransomware.py
  ```
  
- ### 3. Fonctionnement
+## 3. Fonctionnement
  
 ### 3.1. Fonctionnement général du ransomware
 
@@ -76,20 +76,18 @@ Un formulaire va alors s'afficher. Il faut alors entrer la clé de déchiffremen
 
 ## 4. Réponses aux questions
 
-# Question 1 : Quelle est le nom de l'algorithme de chiffrement? Est-il robuste et pourquoi ?
+### Question 1 : Quelle est le nom de l'algorithme de chiffrement? Est-il robuste et pourquoi ?
 
-> Chiffrement par flux avec une porte XOR
-> non pas robuste car onpeut trouver la clef facilement si on a des backup de certains fichiers qui ont été chiffrés avec
+L'algorithme de chiffrement utilisé est un chiffrement par flux avec une porte XOR et un clé. Celui-ci n'est pas robuste.En effet, puisqu'il s'agit d'una attaque par fréquence, on peut trouver la clef facilement si on a des backups de certains fichiers qui ont été chiffrés avec.
 
+### Question 2 : Pourquoi ne pas hacher le sel et la clef directement ? Et avec un hmac ?
 
-# Question 2 : Pourquoi ne pas hacher le sel et la clef directement ? Et avec un hmac ?
+On ne hache pas le sel et la clef directement puisque l'on souhaite que la clé dérivée soit plus longue que la clé de banse. Une fonction de dérivation de clé et non de hashage sera plus appropriée.
 
-> 
+### Question 3 : Pourquoi il est préférable de vérifier qu'un fichier token.bin n'est pas déjà présent ?
 
+Il est préférable de vérifier qu'un fichier token.bin n'est pas déjà présent afin d'éviter de perdre le token si les fichiers avait déja été chiffrée au préalable en les chiffrant une nouvelles fois et réinitialisant le token en lançant le programme.
 
-# Question 3 : Pourquoi il est préférable de vérifier qu'un fichier token.bin n'est pas déjà présent ?
+### Question 4 : Comment vérifier que la clef est la bonne ?
 
-
-# Question 4 : Comment vérifier que la clef est la bonne ?
-
-> La clef est correct si la combinaison de la clef et du sel donne le même hash que le hash du fichier token.bin 
+On peut vérifier que la clef est bonne en vérifiant que la dérivation de la clef et du salt donne le même token que celui du fichier token.bin. Si les deux tokens sont identiques, alors la clef est la bonne.
